@@ -74,11 +74,11 @@ const SearchBooks = () => {
 
     try {
 
-      const { data } = await saveBook({
-  
+  await saveBook({
+        
         variables: { bookData: {...bookToSave } },
       });
-
+      // console.log('data', data);
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
       console.error('error from SearchBooks', err);

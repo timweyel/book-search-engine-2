@@ -8,6 +8,7 @@ const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
+
 const app = express();
 // create a new Apollo server and pass in our schema data
 const server = new ApolloServer({
@@ -21,6 +22,10 @@ server.applyMiddleware({ app });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
 db.once('open', () => {
   app.listen(PORT, () => {
